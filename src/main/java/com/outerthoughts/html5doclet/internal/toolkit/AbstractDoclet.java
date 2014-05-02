@@ -55,13 +55,14 @@ public abstract class AbstractDoclet {
     /**
      * Verify that the only doclet that is using this toolkit is
      * {@value #TOOLKIT_DOCLET_NAME}.
+     * DISABLED
      */
     private boolean isValidDoclet(AbstractDoclet doclet) {
-        if (! doclet.getClass().getName().equals(TOOLKIT_DOCLET_NAME)) {
-            configuration.message.error("doclet.Toolkit_Usage_Violation",
-                TOOLKIT_DOCLET_NAME);
-            return false;
-        }
+//        if (! doclet.getClass().getName().equals(TOOLKIT_DOCLET_NAME)) {
+//            configuration.message.error("doclet.Toolkit_Usage_Violation",
+//                TOOLKIT_DOCLET_NAME);
+//            return false;
+//        }
         return true;
     }
 
