@@ -25,11 +25,12 @@
 
 package com.outerthoughts.html5doclet.formats.html.markup;
 
+import com.outerthoughts.html5doclet.internal.toolkit.Content;
+import com.outerthoughts.html5doclet.internal.toolkit.util.DocletAbortException;
+import com.outerthoughts.html5doclet.internal.toolkit.util.DocletConstants;
+
 import java.io.IOException;
 import java.io.Writer;
-
-import com.outerthoughts.html5doclet.internal.toolkit.Content;
-import com.outerthoughts.html5doclet.internal.toolkit.util.*;
 
 /**
  * Class for generating document type for HTML pages of javadoc output.
@@ -51,6 +52,12 @@ public class DocType extends Content {
     public static final DocType FRAMESET =
             new DocType("Frameset", "http://www.w3.org/TR/html4/frameset.dtd");
 
+    public static final DocType HTML5 = new DocType();
+
+
+    private DocType() {
+        docType = "<!DOCTYPE HTML>" + DocletConstants.NL; //HTML5 doctype
+    }
     /**
      * Constructor to construct a DocType object.
      *

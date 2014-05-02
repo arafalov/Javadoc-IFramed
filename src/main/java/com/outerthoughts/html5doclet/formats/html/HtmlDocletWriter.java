@@ -392,7 +392,7 @@ public class HtmlDocletWriter extends HtmlDocWriter {
      */
     public void printHtmlDocument(String[] metakeywords, boolean includeScript,
             Content body) throws IOException {
-        Content htmlDocType = DocType.TRANSITIONAL;
+        Content htmlDocType = DocType.HTML5;
         Content htmlComment = new Comment(configuration.getText("doclet.New_Page"));
         Content head = new HtmlTree(HtmlTag.HEAD);
         head.addContent(getGeneratedBy(!configuration.notimestamp));
