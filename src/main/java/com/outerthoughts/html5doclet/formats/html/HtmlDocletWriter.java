@@ -25,15 +25,16 @@
 
 package com.outerthoughts.html5doclet.formats.html;
 
-import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-import com.sun.javadoc.*;
 import com.outerthoughts.html5doclet.formats.html.markup.*;
 import com.outerthoughts.html5doclet.internal.toolkit.*;
-import com.outerthoughts.html5doclet.internal.toolkit.taglets.*;
+import com.outerthoughts.html5doclet.internal.toolkit.taglets.DocRootTaglet;
+import com.outerthoughts.html5doclet.internal.toolkit.taglets.TagletWriter;
 import com.outerthoughts.html5doclet.internal.toolkit.util.*;
+import com.sun.javadoc.*;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Class for the Html Format Code Generation specific to JavaDoc.
@@ -414,6 +415,7 @@ public class HtmlDocletWriter extends HtmlDocWriter {
             }
         }
         head.addContent(getStyleSheetProperties());
+        head.addContent(getJQueryProperties());
         head.addContent(getScriptProperties());
         Content htmlTree = HtmlTree.HTML(configuration.getLocale().getLanguage(),
                 head, body);
@@ -851,7 +853,7 @@ public class HtmlDocletWriter extends HtmlDocWriter {
     /**
      * Get table caption.
      *
-     * @param rawText the caption for the table which could be raw Html
+     * @param title the caption for the table which could be raw Html
      * @return a content tree for the caption
      */
     public Content getTableCaption(Content title) {
@@ -1819,6 +1821,11 @@ public class HtmlDocletWriter extends HtmlDocWriter {
         return script;
     }
 
+    public HtmlTree getJQueryProperties() {
+        HtmlTree script = HtmlTree.SCRIPT("text/javascript",
+                pathToRoot.resolve(DocPaths.JAVASCRIPT_JQUERY).getPath());
+        return script;
+    }
     /**
      * According to
      * <cite>The Java&trade; Language Specification</cite>,
@@ -1936,7 +1943,7 @@ public class HtmlDocletWriter extends HtmlDocWriter {
      * @param indent the number of extra spaces to indent the annotations.
      * @param descList the array of {@link AnnotationDesc}.
      * @param linkBreak if true, add new line between each member value.
-     * @param elementType the type of targeted element (used for filtering
+     * //@param elementType the type of targeted element (used for filtering
      *        type annotations from declaration annotations)
      * @return an array of strings representing the annotations being
      *         documented.

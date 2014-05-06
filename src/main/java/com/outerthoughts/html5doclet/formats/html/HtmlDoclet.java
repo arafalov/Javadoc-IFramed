@@ -24,15 +24,15 @@
  */
 package com.outerthoughts.html5doclet.formats.html;
 
-import java.io.*;
-import java.util.*;
-
-import com.sun.javadoc.*;
-import com.sun.tools.javac.sym.Profiles;
-import com.sun.tools.javac.jvm.Profile;
-import com.outerthoughts.html5doclet.internal.toolkit.*;
-import com.outerthoughts.html5doclet.internal.toolkit.builders.*;
+import com.outerthoughts.html5doclet.internal.toolkit.AbstractDoclet;
+import com.outerthoughts.html5doclet.internal.toolkit.Configuration;
+import com.outerthoughts.html5doclet.internal.toolkit.builders.AbstractBuilder;
 import com.outerthoughts.html5doclet.internal.toolkit.util.*;
+import com.sun.javadoc.*;
+import com.sun.tools.javac.jvm.Profile;
+
+import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * The class with "start" method, calls individual Writers.
@@ -157,6 +157,10 @@ public class HtmlDoclet extends AbstractDoclet {
         }
         f = DocFile.createFileForOutput(configuration, DocPaths.JAVASCRIPT);
         f.copyResource(DocPaths.RESOURCES.resolve(DocPaths.JAVASCRIPT), true, true);
+
+        f = DocFile.createFileForOutput(configuration, DocPaths.JAVASCRIPT_JQUERY);
+        f.copyResource(DocPaths.RESOURCES.resolve(DocPaths.JAVASCRIPT_JQUERY), true, true);
+
     }
 
     /**

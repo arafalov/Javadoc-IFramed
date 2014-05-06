@@ -75,6 +75,8 @@ public class DocPaths {
     /** The name of the default javascript file. */
     public static final DocPath JAVASCRIPT = DocPath.create("script.js");
 
+    public static final DocPath JAVASCRIPT_JQUERY = DocPath.create("jquery.min.js");
+
     /** The name of the file for the overview frame. */
     public static final DocPath OVERVIEW_FRAME = DocPath.create("overview-frame.html");
 
