@@ -572,3 +572,9 @@ div.block div.block span.interfaceName {
 div.contentContainer ul.blockList li.blockList h2{
     padding-bottom:0px;
 }
+
+div.frameContent { margin-left: 20%;}
+div.framesetNav { position: fixed; height: 100%; width: 19%;}
+div.framesetNav iframe {width: 100%;}
+iframe.frameOverview {height: 30%;}
+iframe.framePackage {height: 70%}

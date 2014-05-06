@@ -25,12 +25,20 @@
 
 package com.outerthoughts.html5doclet.internal.toolkit.builders;
 
-import java.io.*;
-import java.util.*;
+import com.outerthoughts.html5doclet.formats.html.markup.HtmlAttr;
+import com.outerthoughts.html5doclet.formats.html.markup.HtmlStyle;
+import com.outerthoughts.html5doclet.formats.html.markup.HtmlTag;
+import com.outerthoughts.html5doclet.formats.html.markup.HtmlTree;
+import com.outerthoughts.html5doclet.internal.toolkit.ClassWriter;
+import com.outerthoughts.html5doclet.internal.toolkit.Content;
+import com.outerthoughts.html5doclet.internal.toolkit.util.DocPath;
+import com.outerthoughts.html5doclet.internal.toolkit.util.DocPaths;
+import com.outerthoughts.html5doclet.internal.toolkit.util.Util;
+import com.sun.javadoc.ClassDoc;
+import com.sun.javadoc.PackageDoc;
 
-import com.sun.javadoc.*;
-import com.outerthoughts.html5doclet.internal.toolkit.*;
-import com.outerthoughts.html5doclet.internal.toolkit.util.*;
+import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * Builds the summary for a given class.
@@ -148,6 +156,45 @@ public class ClassBuilder extends AbstractBuilder {
          buildChildren(node, classContentTree);
          contentTree.addContent(classContentTree);
          writer.addFooter(contentTree);
+
+         /*
+         Content Tree is body tag
+         Wrap it in:
+         <div>
+             <div class="framesetNav">
+                <iframe class="frameOverview" src="../../../../../../overview-frame.html"> </iframe>
+                <iframe class="framePackage"  src="package-frame.html"> </iframe>
+            </div>
+            <div class="frameContent">
+            ....
+            </div>
+         </div>
+          */
+         HtmlTree wrapper = new HtmlTree(HtmlTag.DIV);
+
+         HtmlTree framesetNav = new HtmlTree(HtmlTag.DIV);
+         framesetNav.addStyle(HtmlStyle.framesetNav);
+
+         HtmlTree frameOverview = new HtmlTree(HtmlTag.IFRAME);
+         frameOverview.addStyle(HtmlStyle.frameOverview);
+         frameOverview.addAttr(HtmlAttr.SRC,
+                 DocPath.forRoot(classDoc.containingPackage()).resolve(DocPaths.OVERVIEW_FRAME).getPath());
+
+         HtmlTree framePackage = new HtmlTree(HtmlTag.IFRAME);
+         framePackage.addStyle(HtmlStyle.framePackage);
+         framePackage.addAttr(HtmlAttr.SRC, DocPaths.PACKAGE_FRAME.getPath());
+
+         framesetNav.addContent(frameOverview);
+         framesetNav.addContent(framePackage);
+
+         wrapper.addContent(framesetNav);
+
+         HtmlTree innerTag = new HtmlTree(HtmlTag.DIV);
+         innerTag.addStyle(HtmlStyle.frameContent);
+
+         ((HtmlTree)contentTree).wrapInnerContent(wrapper, innerTag);
+         wrapper.addContent(innerTag); //add innerTag once it has real content, otherwise it's skipped
+
          writer.printDocument(contentTree);
          writer.close();
          copyDocFiles();

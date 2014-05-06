@@ -25,13 +25,13 @@
 
 package com.outerthoughts.html5doclet.formats.html.markup;
 
+import com.outerthoughts.html5doclet.internal.toolkit.Content;
+import com.outerthoughts.html5doclet.internal.toolkit.util.DocletConstants;
+
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.charset.Charset;
 import java.util.*;
-import java.nio.charset.*;
-
-import com.outerthoughts.html5doclet.internal.toolkit.Content;
-import com.outerthoughts.html5doclet.internal.toolkit.util.*;
 
 /**
  * Class for generating HTML tree for javadoc output.
@@ -94,6 +94,18 @@ public class HtmlTree extends Content {
      */
     public void addStyle(HtmlStyle style) {
         addAttr(HtmlAttr.CLASS, style.toString());
+    }
+
+    /**
+     * Wrap the existing content in a new container
+     * @param wrapper - the structure of wrapping content
+     * @param container - the specific tag to add old content to, has to be part of wrapper
+     */
+    public void wrapInnerContent(Content wrapper, HtmlTree container)
+    {
+        content.forEach(c -> container.addContent(c));
+        content.clear();
+        content.add(wrapper);
     }
 
     /**
@@ -785,6 +797,8 @@ public class HtmlTree extends Content {
                 return (hasAttr(HtmlAttr.SRC) && !hasContent());
             case HR :
                 return (!hasContent());
+            case IFRAME:
+                return hasAttr(HtmlAttr.SRC) && !hasContent();
             case IMG :
                 return (hasAttr(HtmlAttr.SRC) && hasAttr(HtmlAttr.ALT) && !hasContent());
             case LINK :
