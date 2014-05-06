@@ -554,9 +554,9 @@ public class HtmlDocletWriter extends HtmlDocWriter {
             Content ulNav = HtmlTree.UL(HtmlStyle.navList, getNavLinkPrevious());
             ulNav.addContent(getNavLinkNext());
             Content subDiv = HtmlTree.DIV(HtmlStyle.subNav, ulNav);
-            Content ulFrames = HtmlTree.UL(HtmlStyle.navList, getNavShowLists());
-            ulFrames.addContent(getNavHideLists(filename));
-            subDiv.addContent(ulFrames);
+//            Content ulFrames = HtmlTree.UL(HtmlStyle.navList, getNavShowLists());
+//            ulFrames.addContent(getNavHideLists(filename));
+//            subDiv.addContent(ulFrames);
             HtmlTree ulAllClasses = HtmlTree.UL(HtmlStyle.navList, getNavLinkClassIndex());
             ulAllClasses.addAttr(HtmlAttr.ID, allClassesId.toString());
             subDiv.addContent(ulAllClasses);
