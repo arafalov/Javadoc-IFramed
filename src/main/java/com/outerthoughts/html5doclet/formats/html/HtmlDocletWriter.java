@@ -415,7 +415,13 @@ public class HtmlDocletWriter extends HtmlDocWriter {
             }
         }
         head.addContent(getStyleSheetProperties());
+        head.addContent(
+                HtmlTree.LINK("stylesheet", "text/css",
+                pathToRoot.resolve(DocPaths.STYLESHEET_SELECT2).getPath(),
+                "Style"));
+
         head.addContent(getJQueryProperties());
+        head.addContent(getSelect2Properties());
         head.addContent(getScriptProperties());
         Content htmlTree = HtmlTree.HTML(configuration.getLocale().getLanguage(),
                 head, body);
@@ -1826,6 +1832,13 @@ public class HtmlDocletWriter extends HtmlDocWriter {
                 pathToRoot.resolve(DocPaths.JAVASCRIPT_JQUERY).getPath());
         return script;
     }
+
+    public HtmlTree getSelect2Properties() {
+        HtmlTree script = HtmlTree.SCRIPT("text/javascript",
+                pathToRoot.resolve(DocPaths.JAVASCRIPT_SELECT2).getPath());
+        return script;
+    }
+
     /**
      * According to
      * <cite>The Java&trade; Language Specification</cite>,

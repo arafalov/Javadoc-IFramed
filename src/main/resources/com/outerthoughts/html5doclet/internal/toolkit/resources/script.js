@@ -28,3 +28,44 @@ function updateTabs(type)
         }
     }
 }
+
+
+
+$(document).ready(function() {
+	$("#searchField").select2({
+		minimumInputLength: 3,
+		placeholder: "Search for a class or method",
+		ajax: {
+			url: "/lookup",
+			dataType: "json",
+			data: function(term, page){
+				return { query: term };
+			},
+			results: function(data, page){
+				return {results: data};
+			},
+
+		},
+		formatResult: function(match){
+			//console.log("Match", match);
+			if (match.comment) {
+				return "<dl><dt>"+match.htmlDescription + "</dt><dd><em>" + match.comment +"</em></dd></dl>";
+			} else {
+				return match.htmlDescription;
+			}
+
+		},
+		formatSelection: function(s){
+			return s.htmlDescription;
+		},
+
+	});
+
+	//Events
+	$("#searchField")
+		.on("change", function(e) {
+			console.log("change "+JSON.stringify({val:e.val, added:e.added, removed:e.removed}));
+			window.open(e.added.urlTarget);
+		})
+});
+

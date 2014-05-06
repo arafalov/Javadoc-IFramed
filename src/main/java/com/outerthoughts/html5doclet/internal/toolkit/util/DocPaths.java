@@ -77,6 +77,8 @@ public class DocPaths {
 
     public static final DocPath JAVASCRIPT_JQUERY = DocPath.create("jquery.min.js");
 
+    public static final DocPath JAVASCRIPT_SELECT2 = DocPath.create("select2.min.js");
+
     /** The name of the file for the overview frame. */
     public static final DocPath OVERVIEW_FRAME = DocPath.create("overview-frame.html");
 
@@ -137,5 +139,7 @@ public class DocPaths {
 
     /** The name of the default stylesheet. */
     public static final DocPath STYLESHEET = DocPath.create("stylesheet.css");
+
+    public static final DocPath STYLESHEET_SELECT2 = DocPath.create("select2.css");
 
 }

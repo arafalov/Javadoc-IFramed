@@ -155,11 +155,18 @@ public class HtmlDoclet extends AbstractDoclet {
             f = DocFile.createFileForOutput(configuration, DocPaths.STYLESHEET);
             f.copyResource(DocPaths.RESOURCES.resolve(DocPaths.STYLESHEET), false, true);
         }
+        f = DocFile.createFileForOutput(configuration, DocPaths.STYLESHEET_SELECT2);
+        f.copyResource(DocPaths.RESOURCES.resolve(DocPaths.STYLESHEET_SELECT2), false, true);
+
+
         f = DocFile.createFileForOutput(configuration, DocPaths.JAVASCRIPT);
         f.copyResource(DocPaths.RESOURCES.resolve(DocPaths.JAVASCRIPT), true, true);
 
         f = DocFile.createFileForOutput(configuration, DocPaths.JAVASCRIPT_JQUERY);
         f.copyResource(DocPaths.RESOURCES.resolve(DocPaths.JAVASCRIPT_JQUERY), true, true);
+
+        f = DocFile.createFileForOutput(configuration, DocPaths.JAVASCRIPT_SELECT2);
+        f.copyResource(DocPaths.RESOURCES.resolve(DocPaths.JAVASCRIPT_SELECT2), true, true);
 
     }
 

@@ -25,17 +25,21 @@
 
 package com.outerthoughts.html5doclet.formats.html;
 
-import java.util.*;
-
-import com.sun.javadoc.*;
+import com.outerthoughts.html5doclet.formats.html.markup.*;
+import com.outerthoughts.html5doclet.internal.toolkit.ClassWriter;
+import com.outerthoughts.html5doclet.internal.toolkit.Content;
+import com.outerthoughts.html5doclet.internal.toolkit.builders.MemberSummaryBuilder;
+import com.outerthoughts.html5doclet.internal.toolkit.taglets.ParamTaglet;
+import com.outerthoughts.html5doclet.internal.toolkit.util.*;
+import com.sun.javadoc.AnnotationDesc;
+import com.sun.javadoc.ClassDoc;
+import com.sun.javadoc.Tag;
+import com.sun.javadoc.Type;
 import com.sun.tools.javac.jvm.Profile;
 import com.sun.tools.javadoc.RootDocImpl;
-import com.outerthoughts.html5doclet.formats.html.markup.*;
-import com.outerthoughts.html5doclet.internal.toolkit.*;
-import com.outerthoughts.html5doclet.internal.toolkit.builders.*;
-import com.outerthoughts.html5doclet.internal.toolkit.taglets.*;
-import com.outerthoughts.html5doclet.internal.toolkit.util.*;
+
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Generate the Class Information Page.
@@ -163,6 +167,13 @@ public class ClassWriterImpl extends SubWriterHolderWriter
         Content bodyTree = getBody(true, getWindowTitle(clname));
         addTop(bodyTree);
         addNavLinks(true, bodyTree);
+
+        //<input id="searchField" type="hidden" style="width:80%; margin-top: 1em; padding:2px;"/>
+        HtmlTree searchInput = new HtmlTree(HtmlTag.INPUT);
+        searchInput.addAttr(HtmlAttr.ID, "searchField");
+        searchInput.addAttr(HtmlAttr.STYLE, "width:80%; margin-top: 1em; padding:2px;"); //can't use CSS, Select2 copies this
+        bodyTree.addContent(searchInput);
+
         bodyTree.addContent(HtmlConstants.START_OF_CLASS_DATA);
         HtmlTree div = new HtmlTree(HtmlTag.DIV);
         div.addStyle(HtmlStyle.header);

@@ -801,6 +801,8 @@ public class HtmlTree extends Content {
                 return hasAttr(HtmlAttr.SRC) && !hasContent();
             case IMG :
                 return (hasAttr(HtmlAttr.SRC) && hasAttr(HtmlAttr.ALT) && !hasContent());
+            case INPUT :
+                return (hasAttr(HtmlAttr.ID) && !hasContent());
             case LINK :
                 return (hasAttr(HtmlAttr.HREF) && !hasContent());
             case META :
