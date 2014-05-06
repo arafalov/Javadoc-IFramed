@@ -58,8 +58,8 @@ public class DocPaths {
     /** The name of the file for help info. */
     public static final DocPath HELP_DOC = DocPath.create("help-doc.html");
 
-    /** The name of the main index file. */
-    public static final DocPath INDEX = DocPath.create("index.html");
+    /** The name of the main index file - NOT with iframes. */
+    public static final DocPath INDEX = DocPath.create("index-frames.html");
 
     /** The name of the single index file for all classes. */
     public static final DocPath INDEX_ALL = DocPath.create("index-all.html");
@@ -80,8 +80,8 @@ public class DocPaths {
     /** The name of the file for the overview frame. */
     public static final DocPath OVERVIEW_FRAME = DocPath.create("overview-frame.html");
 
-    /** The name of the file for the overview summary. */
-    public static final DocPath OVERVIEW_SUMMARY = DocPath.create("overview-summary.html");
+    /** The name of the file for the overview summary. Good main index with iframes */
+    public static final DocPath OVERVIEW_SUMMARY = DocPath.create("index.html");
 
     /** The name of the file for the overview tree. */
     public static final DocPath OVERVIEW_TREE = DocPath.create("overview-tree.html");
