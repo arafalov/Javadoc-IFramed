@@ -25,14 +25,16 @@
 
 package com.outerthoughts.html5doclet.formats.html;
 
-import java.io.*;
-import java.util.*;
-
-import com.sun.javadoc.*;
-import com.sun.tools.javac.jvm.Profile;
 import com.outerthoughts.html5doclet.formats.html.markup.*;
-import com.outerthoughts.html5doclet.internal.toolkit.*;
+import com.outerthoughts.html5doclet.internal.toolkit.Content;
 import com.outerthoughts.html5doclet.internal.toolkit.util.*;
+import com.sun.javadoc.PackageDoc;
+import com.sun.javadoc.RootDoc;
+import com.sun.tools.javac.jvm.Profile;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Generate the package index page "overview-summary.html" for the right-hand
@@ -133,7 +135,7 @@ public class PackageIndexWriter extends AbstractPackageIndexWriter {
             // If the profile has valid packages to be documented, add it to the
             // profiles list on overview-summary.html page.
             if (configuration.shouldDocumentProfile(profileName)) {
-                Content profileLinkContent = getTargetProfileLink("classFrame",
+                Content profileLinkContent = getTargetProfileLink("_top",
                         new StringContent(profileName), profileName);
                 Content li = HtmlTree.LI(profileLinkContent);
                 ul.addContent(li);

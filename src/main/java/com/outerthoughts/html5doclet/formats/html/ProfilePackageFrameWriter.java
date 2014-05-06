@@ -25,14 +25,18 @@
 
 package com.outerthoughts.html5doclet.formats.html;
 
-import java.io.*;
-import java.util.*;
-
-import com.sun.javadoc.*;
-import com.sun.tools.javac.jvm.Profile;
 import com.outerthoughts.html5doclet.formats.html.markup.*;
-import com.outerthoughts.html5doclet.internal.toolkit.*;
-import com.outerthoughts.html5doclet.internal.toolkit.util.*;
+import com.outerthoughts.html5doclet.internal.toolkit.Content;
+import com.outerthoughts.html5doclet.internal.toolkit.util.DocPath;
+import com.outerthoughts.html5doclet.internal.toolkit.util.DocPaths;
+import com.outerthoughts.html5doclet.internal.toolkit.util.DocletAbortException;
+import com.outerthoughts.html5doclet.internal.toolkit.util.Util;
+import com.sun.javadoc.ClassDoc;
+import com.sun.javadoc.PackageDoc;
+import com.sun.tools.javac.jvm.Profile;
+
+import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * Class to generate file for each package contents of a profile in the left-hand bottom
@@ -99,10 +103,10 @@ public class ProfilePackageFrameWriter extends HtmlDocletWriter {
             Content sepContent = new StringContent(sep);
             Content pkgNameContent = new RawHtml(pkgName);
             Content heading = HtmlTree.HEADING(HtmlConstants.TITLE_HEADING, HtmlStyle.bar,
-                    profpackgen.getTargetProfileLink("classFrame", profName, profileName));
+                    profpackgen.getTargetProfileLink("_top", profName, profileName));
             heading.addContent(sepContent);
             heading.addContent(profpackgen.getTargetProfilePackageLink(packageDoc,
-                    "classFrame", pkgNameContent, profileName));
+                    "_top", pkgNameContent, profileName));
             body.addContent(heading);
             HtmlTree div = new HtmlTree(HtmlTag.DIV);
             div.addStyle(HtmlStyle.indexContainer);
@@ -176,7 +180,7 @@ public class ProfilePackageFrameWriter extends HtmlDocletWriter {
                 Content arr_i_name = new StringContent(arr[i].name());
                 if (arr[i].isInterface()) arr_i_name = HtmlTree.SPAN(HtmlStyle.interfaceName, arr_i_name);
                 Content link = getLink(new LinkInfoImpl(configuration,
-                        LinkInfoImpl.Kind.PACKAGE_FRAME, arr[i]).label(arr_i_name).target("classFrame"));
+                        LinkInfoImpl.Kind.PACKAGE_FRAME, arr[i]).label(arr_i_name).target("_top"));
                 Content li = HtmlTree.LI(link);
                 ul.addContent(li);
             }

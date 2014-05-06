@@ -25,14 +25,17 @@
 
 package com.outerthoughts.html5doclet.formats.html;
 
-import java.io.*;
-import java.util.*;
-
-import com.sun.javadoc.*;
-import com.sun.tools.javac.jvm.Profile;
 import com.outerthoughts.html5doclet.formats.html.markup.*;
-import com.outerthoughts.html5doclet.internal.toolkit.*;
-import com.outerthoughts.html5doclet.internal.toolkit.util.*;
+import com.outerthoughts.html5doclet.internal.toolkit.Content;
+import com.outerthoughts.html5doclet.internal.toolkit.ProfileSummaryWriter;
+import com.outerthoughts.html5doclet.internal.toolkit.util.DocPaths;
+import com.outerthoughts.html5doclet.internal.toolkit.util.Util;
+import com.sun.javadoc.ClassDoc;
+import com.sun.javadoc.PackageDoc;
+import com.sun.javadoc.Tag;
+import com.sun.tools.javac.jvm.Profile;
+
+import java.io.IOException;
 
 /**
  * Class to generate file for each profile contents in the right-hand
@@ -135,7 +138,7 @@ public class ProfileWriterImpl extends HtmlDocletWriter
      */
     public Content getPackageSummaryHeader(PackageDoc pkg) {
         Content pkgName = getTargetProfilePackageLink(pkg,
-                    "classFrame", new StringContent(pkg.name()), profile.name);
+                    "_top", new StringContent(pkg.name()), profile.name);
         Content heading = HtmlTree.HEADING(HtmlTag.H3, pkgName);
         HtmlTree li = HtmlTree.LI(HtmlStyle.blockList, heading);
         addPackageDeprecationInfo(li, pkg);

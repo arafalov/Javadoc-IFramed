@@ -25,13 +25,17 @@
 
 package com.outerthoughts.html5doclet.formats.html;
 
-import java.io.*;
-import java.util.*;
-
-import com.sun.javadoc.*;
-import com.outerthoughts.html5doclet.formats.html.markup.*;
-import com.outerthoughts.html5doclet.internal.toolkit.*;
+import com.outerthoughts.html5doclet.formats.html.markup.HtmlConstants;
+import com.outerthoughts.html5doclet.formats.html.markup.HtmlStyle;
+import com.outerthoughts.html5doclet.formats.html.markup.HtmlTag;
+import com.outerthoughts.html5doclet.formats.html.markup.HtmlTree;
+import com.outerthoughts.html5doclet.internal.toolkit.Content;
 import com.outerthoughts.html5doclet.internal.toolkit.util.*;
+import com.sun.javadoc.ClassDoc;
+import com.sun.javadoc.Doc;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Generate the file with list of all the classes in this run. This page will be
@@ -160,7 +164,7 @@ public class AllClassesFrameWriter extends HtmlDocletWriter {
             Content linkContent;
             if (wantFrames) {
                 linkContent = getLink(new LinkInfoImpl(configuration,
-                        LinkInfoImpl.Kind.ALL_CLASSES_FRAME, cd).label(label).target("classFrame"));
+                        LinkInfoImpl.Kind.ALL_CLASSES_FRAME, cd).label(label).target("_top"));
             } else {
                 linkContent = getLink(new LinkInfoImpl(configuration, LinkInfoImpl.Kind.DEFAULT, cd).label(label));
             }

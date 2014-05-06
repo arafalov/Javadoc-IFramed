@@ -25,13 +25,16 @@
 
 package com.outerthoughts.html5doclet.formats.html;
 
-import java.io.*;
-
-import com.sun.javadoc.*;
-import com.sun.tools.javac.sym.Profiles;
 import com.outerthoughts.html5doclet.formats.html.markup.*;
-import com.outerthoughts.html5doclet.internal.toolkit.*;
-import com.outerthoughts.html5doclet.internal.toolkit.util.*;
+import com.outerthoughts.html5doclet.internal.toolkit.Content;
+import com.outerthoughts.html5doclet.internal.toolkit.util.DocPath;
+import com.outerthoughts.html5doclet.internal.toolkit.util.DocPaths;
+import com.outerthoughts.html5doclet.internal.toolkit.util.DocletAbortException;
+import com.outerthoughts.html5doclet.internal.toolkit.util.Util;
+import com.sun.javadoc.PackageDoc;
+import com.sun.tools.javac.sym.Profiles;
+
+import java.io.IOException;
 
 /**
  * Generate the profile package index for the left-hand frame in the generated output.
@@ -86,7 +89,7 @@ public class ProfilePackageIndexFrameWriter extends AbstractProfileIndexWriter {
             String tableSummary, Content body, String profileName) {
         Content profNameContent = new StringContent(profileName);
         Content heading = HtmlTree.HEADING(HtmlConstants.PACKAGE_HEADING, true,
-                getTargetProfileLink("classFrame", profNameContent, profileName));
+                getTargetProfileLink("_top", profNameContent, profileName));
         heading.addContent(getSpace());
         heading.addContent(packagesLabel);
         Content div = HtmlTree.DIV(HtmlStyle.indexContainer, heading);
