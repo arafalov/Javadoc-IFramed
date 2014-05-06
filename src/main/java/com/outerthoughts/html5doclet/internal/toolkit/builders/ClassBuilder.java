@@ -183,6 +183,7 @@ public class ClassBuilder extends AbstractBuilder {
          HtmlTree framePackage = new HtmlTree(HtmlTag.IFRAME);
          framePackage.addStyle(HtmlStyle.framePackage);
          framePackage.addAttr(HtmlAttr.SRC, DocPaths.PACKAGE_FRAME.getPath());
+         framePackage.addAttr(HtmlAttr.NAME, "packageFrame");
 
          framesetNav.addContent(frameOverview);
          framesetNav.addContent(framePackage);

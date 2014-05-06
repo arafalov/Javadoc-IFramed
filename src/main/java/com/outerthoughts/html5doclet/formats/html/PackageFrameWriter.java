@@ -25,13 +25,20 @@
 
 package com.outerthoughts.html5doclet.formats.html;
 
-import java.io.*;
-import java.util.*;
-
-import com.sun.javadoc.*;
 import com.outerthoughts.html5doclet.formats.html.markup.*;
-import com.outerthoughts.html5doclet.internal.toolkit.*;
-import com.outerthoughts.html5doclet.internal.toolkit.util.*;
+import com.outerthoughts.html5doclet.internal.toolkit.Configuration;
+import com.outerthoughts.html5doclet.internal.toolkit.Content;
+import com.outerthoughts.html5doclet.internal.toolkit.util.DocPath;
+import com.outerthoughts.html5doclet.internal.toolkit.util.DocPaths;
+import com.outerthoughts.html5doclet.internal.toolkit.util.DocletAbortException;
+import com.outerthoughts.html5doclet.internal.toolkit.util.Util;
+import com.sun.javadoc.ClassDoc;
+import com.sun.javadoc.PackageDoc;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Class to generate file for each package contents in the left-hand bottom
@@ -96,7 +103,7 @@ public class PackageFrameWriter extends HtmlDocletWriter {
             Content body = packgen.getBody(false, packgen.getWindowTitle(pkgName));
             Content pkgNameContent = new StringContent(pkgName);
             Content heading = HtmlTree.HEADING(HtmlConstants.TITLE_HEADING, HtmlStyle.bar,
-                    packgen.getTargetPackageLink(packageDoc, "classFrame", pkgNameContent));
+                    packgen.getTargetPackageLink(packageDoc, null /*"classFrame"*/, pkgNameContent));
             body.addContent(heading);
             HtmlTree div = new HtmlTree(HtmlTag.DIV);
             div.addStyle(HtmlStyle.indexContainer);
