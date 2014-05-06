@@ -27,6 +27,7 @@ public class TestMain {
         Main.execute("HTML5-Doclet", "com.outerthoughts.html5doclet.formats.html.HtmlDoclet", new String[]{
                 "-sourcepath", System.getProperty("user.dir") + "/src/main/java",
                 "-subpackages", "com.outerthoughts.html5doclet.formats.html",
+                "-use", "-nohelp",
                 "-d", targetDir
         });
 
