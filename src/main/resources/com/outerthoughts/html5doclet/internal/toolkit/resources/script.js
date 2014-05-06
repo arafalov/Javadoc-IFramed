@@ -65,7 +65,7 @@ $(document).ready(function() {
 	$("#searchField")
 		.on("change", function(e) {
 			console.log("change "+JSON.stringify({val:e.val, added:e.added, removed:e.removed}));
-			window.open(e.added.urlTarget);
+            window.location = e.added.urlTarget;
 		})
 });
 
