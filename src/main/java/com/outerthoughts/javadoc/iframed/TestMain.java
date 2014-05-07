@@ -29,7 +29,7 @@ public class TestMain {
                 "-subpackages", "com.outerthoughts.javadoc.iframed",
                 "-group", "html", "com.outerthoughts.javadoc.iframed.formats.html:com.outerthoughts.javadoc.iframed.formats.html.markup",
                 "-group", "internal", "com.outerthoughts.javadoc.iframed.internal.toolkit:com.outerthoughts.javadoc.iframed.internal.toolkit.builders:com.outerthoughts.javadoc.iframed.internal.toolkit.taglets:com.outerthoughts.javadoc.iframed.internal.toolkit.util:com.outerthoughts.javadoc.iframed.internal.toolkit.util.links",
-                "-use", "-nohelp",
+                "-use", "-nohelp", "-splitindex",
                 "-d", targetDir
         });
 
