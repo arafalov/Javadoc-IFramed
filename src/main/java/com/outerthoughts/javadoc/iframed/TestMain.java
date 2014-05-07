@@ -26,7 +26,9 @@ public class TestMain {
         */
         Main.execute("Javadoc-IFramed", "com.outerthoughts.javadoc.iframed.formats.html.HtmlDoclet", new String[]{
                 "-sourcepath", System.getProperty("user.dir") + "/src/main/java",
-                "-subpackages", "com.outerthoughts.javadoc.iframed.formats.html",
+                "-subpackages", "com.outerthoughts.javadoc.iframed",
+                "-group", "html", "com.outerthoughts.javadoc.iframed.formats.html:com.outerthoughts.javadoc.iframed.formats.html.markup",
+                "-group", "internal", "com.outerthoughts.javadoc.iframed.internal.toolkit:com.outerthoughts.javadoc.iframed.internal.toolkit.builders:com.outerthoughts.javadoc.iframed.internal.toolkit.taglets:com.outerthoughts.javadoc.iframed.internal.toolkit.util:com.outerthoughts.javadoc.iframed.internal.toolkit.util.links",
                 "-use", "-nohelp",
                 "-d", targetDir
         });
