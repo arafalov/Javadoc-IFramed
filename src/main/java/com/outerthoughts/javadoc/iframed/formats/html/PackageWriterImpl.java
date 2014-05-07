@@ -25,13 +25,16 @@
 
 package com.outerthoughts.javadoc.iframed.formats.html;
 
-import java.io.*;
-import java.util.*;
-
-import com.sun.javadoc.*;
 import com.outerthoughts.javadoc.iframed.formats.html.markup.*;
-import com.outerthoughts.javadoc.iframed.internal.toolkit.*;
+import com.outerthoughts.javadoc.iframed.internal.toolkit.Content;
+import com.outerthoughts.javadoc.iframed.internal.toolkit.PackageSummaryWriter;
 import com.outerthoughts.javadoc.iframed.internal.toolkit.util.*;
+import com.sun.javadoc.ClassDoc;
+import com.sun.javadoc.PackageDoc;
+import com.sun.javadoc.Tag;
+
+import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * Class to generate file for each package contents in the right-hand
@@ -119,8 +122,19 @@ public class PackageWriterImpl extends HtmlDocletWriter
             div.addContent(descPara);
         }
         bodyTree.addContent(div);
+        addSearchBox(bodyTree);
         return bodyTree;
     }
+
+    private void addSearchBox(Content body) {
+        //<input id="searchField" type="hidden" style="width:80%; margin-top: 1em; padding:2px;"/>
+        HtmlTree searchInput = new HtmlTree(HtmlTag.INPUT);
+        searchInput.addAttr(HtmlAttr.ID, "searchField");
+        searchInput.addAttr(HtmlAttr.STYLE, "width:80%; margin-top: 1em; padding:2px;"); //can't use CSS, Select2 copies this
+        //TODO: package-specific search?
+        body.addContent(searchInput);
+    }
+
 
     /**
      * {@inheritDoc}
