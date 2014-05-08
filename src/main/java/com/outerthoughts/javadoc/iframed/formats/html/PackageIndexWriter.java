@@ -266,4 +266,9 @@ public class PackageIndexWriter extends AbstractPackageIndexWriter {
         addNavLinks(false, body);
         addBottom(body);
     }
+
+    @Override
+    protected boolean hasSearchBox() {
+        return true;
+    }
 }

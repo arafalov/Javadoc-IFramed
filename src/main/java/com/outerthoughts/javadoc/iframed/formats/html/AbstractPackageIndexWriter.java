@@ -110,13 +110,19 @@ public abstract class AbstractPackageIndexWriter extends HtmlDocletWriter {
         Content body = getBody(includeScript, getWindowTitle(windowOverview));
         addNavigationBarHeader(body);
         addOverviewHeader(body);
-        addSearchBox(body);
+        if (hasSearchBox() ) { addSearchBox(body); }
         addIndex(body);
         addOverview(body);
         addNavigationBarFooter(body);
         printHtmlDocument(configuration.metakeywords.getOverviewMetaKeywords(title,
                 configuration.doctitle), includeScript, body);
     }
+
+    /**
+     * Indicate whether the search box is required for this framed/unframed implementation
+     * @return
+     */
+    protected abstract boolean hasSearchBox();
 
     private void addSearchBox(Content body) {
         //<input id="searchField" type="hidden" style="width:80%; margin-top: 1em; padding:2px;"/>

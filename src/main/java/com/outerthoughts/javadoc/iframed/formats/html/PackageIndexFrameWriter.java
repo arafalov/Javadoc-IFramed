@@ -25,12 +25,12 @@
 
 package com.outerthoughts.javadoc.iframed.formats.html;
 
-import java.io.*;
-
-import com.sun.javadoc.*;
 import com.outerthoughts.javadoc.iframed.formats.html.markup.*;
-import com.outerthoughts.javadoc.iframed.internal.toolkit.*;
+import com.outerthoughts.javadoc.iframed.internal.toolkit.Content;
 import com.outerthoughts.javadoc.iframed.internal.toolkit.util.*;
+import com.sun.javadoc.PackageDoc;
+
+import java.io.IOException;
 
 /**
  * Generate the package index for the left-hand frame in the generated output.
@@ -174,4 +174,10 @@ public class PackageIndexFrameWriter extends AbstractPackageIndexWriter {
         Content p = HtmlTree.P(getSpace());
         body.addContent(p);
     }
+
+    @Override
+    protected boolean hasSearchBox() {
+        return false;
+    }
+
 }
