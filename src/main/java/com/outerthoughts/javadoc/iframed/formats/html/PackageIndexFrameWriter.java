@@ -180,4 +180,8 @@ public class PackageIndexFrameWriter extends AbstractPackageIndexWriter {
         return false;
     }
 
+    @Override
+    protected boolean hasAnalytics() {
+        return false;
+    }
 }
