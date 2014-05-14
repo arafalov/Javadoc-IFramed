@@ -423,7 +423,7 @@ public class HtmlDocletWriter extends HtmlDocWriter {
         head.addContent(getJQueryProperties());
         head.addContent(getSelect2Properties());
         head.addContent(getScriptProperties());
-        head.addContent(getAnalytics());
+        if (hasAnalytics()) { head.addContent(getAnalytics()); }
         
         Content htmlTree = HtmlTree.HTML(configuration.getLocale().getLanguage(),
                 head, body);
@@ -2164,6 +2164,15 @@ public class HtmlDocletWriter extends HtmlDocWriter {
      */
     public Configuration configuration() {
         return configuration;
+    }
+
+    /**
+     * By default, include analytics snippet everywhere.
+     * Override in the subclasses that do not need it.
+     * @return
+     */
+    protected boolean hasAnalytics() {
+        return true;
     }
 
     public Content getAnalytics() {
