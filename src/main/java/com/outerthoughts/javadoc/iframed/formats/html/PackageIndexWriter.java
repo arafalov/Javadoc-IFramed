@@ -111,15 +111,36 @@ public class PackageIndexWriter extends AbstractPackageIndexWriter {
      * @param body the documentation tree to which the index will be added
      */
     protected void addIndex(Content body) {
+        //Generate index TOC as we go along with the groups
+
+        Content indexContent = new HtmlTree(HtmlTag.DIV);
+        Content indexTOCContent = new HtmlTree(HtmlTag.UL);
+        boolean showTOC = false;
+
         for (int i = 0; i < groupList.size(); i++) {
         String groupname = groupList.get(i);
         List<PackageDoc> list = groupPackageMap.get(groupname);
             if (list != null && list.size() > 0) {
+                showTOC = true;
+                indexTOCContent.addContent(
+                        HtmlTree.LI(
+                                HtmlTree.A("#"+ groupname, new RawHtml(groupname))));
+
                 addIndexContents(list.toArray(new PackageDoc[list.size()]),
                         groupname, configuration.getText("doclet.Member_Table_Summary",
-                        groupname, configuration.getText("doclet.packages")), body);
+                                groupname, configuration.getText("doclet.packages")), indexContent
+                );
             }
         }
+
+        if (showTOC) {
+            Content indexTOCDiv = HtmlTree.DIV(
+                    HtmlStyle.contentContainer,
+                    HtmlTree.HEADING(HtmlTag.H2, new RawHtml("Package Groups")));
+            indexTOCDiv.addContent(indexTOCContent);
+            body.addContent(indexTOCDiv);
+        }
+        body.addContent(indexContent);
     }
 
     /**
@@ -151,6 +172,7 @@ public class PackageIndexWriter extends AbstractPackageIndexWriter {
      */
     protected void addPackagesList(PackageDoc[] packages, String text,
             String tableSummary, Content body) {
+        body.addContent(HtmlTree.A_NAME(text));
         Content table = HtmlTree.TABLE(HtmlStyle.overviewSummary, 0, 3, 0, tableSummary,
                 getTableCaption(new RawHtml(text)));
         table.addContent(getSummaryTableHeader(packageTableHeader, "col"));
