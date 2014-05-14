@@ -199,4 +199,9 @@ public class PackageFrameWriter extends HtmlDocletWriter {
             contentTree.addContent(ul);
         }
     }
+
+    @Override
+    protected boolean hasAnalytics() {
+        return false;
+    }
 }
