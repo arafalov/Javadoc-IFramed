@@ -31,8 +31,10 @@ import com.outerthoughts.javadoc.iframed.internal.toolkit.util.*;
 import com.sun.javadoc.*;
 import com.sun.tools.javac.jvm.Profile;
 
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.*;
 import java.util.Arrays;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * The class with "start" method, calls individual Writers.
@@ -77,7 +79,49 @@ public class HtmlDoclet extends AbstractDoclet {
         } else {
             doclet = new HtmlDoclet();
         }
-        return doclet.start(doclet, root);
+        boolean success = doclet.start(doclet, root);
+        
+        if (success /* and some sort of common flag is set */) {
+            success = doclet.compressHtmlFiles();
+        }
+        return success;
+    }
+
+    private boolean compressHtmlFiles() {
+        FileSystem fileSystem = FileSystems.getDefault();
+
+        Path startPath = fileSystem.getPath(configuration.docFileDestDirName);
+        PathMatcher htmlPathMatcher = fileSystem.getPathMatcher("glob:**/*.html"); //only compress HTML files for now
+
+        try {
+            Files.walk(startPath)
+                    .filter(htmlPathMatcher::matches)
+                    .forEach(path -> compressFile(path));
+        } catch (IOException e) {
+            System.err.println("Was not able to compress HTML files post-generation: " +  e.toString());
+            return false;
+        }
+        return true;
+    }
+
+    private void compressFile(Path sourcePath) {
+        System.out.println("Compressing: " + sourcePath);
+        Path targetPath = sourcePath.resolveSibling(sourcePath.getFileName() + ".gz");
+        try(
+                OutputStream os = Files.newOutputStream(targetPath);
+                GZIPOutputStream gzOs = new GZIPOutputStream(os, 10000)
+        ) {
+            Files.copy(sourcePath, gzOs);
+            gzOs.close();
+        } catch (IOException e) {
+            System.err.println("Unable to generate compressed file equivalent. Skipping: " + targetPath);
+            try {
+                Files.delete(targetPath);
+            } catch (IOException e1) {
+                System.err.println("Also unable to delete the mis-generated compressed file: " + targetPath);
+            }
+        }
+
     }
 
     /**
