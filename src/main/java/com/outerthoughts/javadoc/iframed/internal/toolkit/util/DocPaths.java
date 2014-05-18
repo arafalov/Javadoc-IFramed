@@ -142,4 +142,10 @@ public class DocPaths {
 
     public static final DocPath STYLESHEET_SELECT2 = DocPath.create("select2.css");
 
+    public static final DocPath[] IMAGES_SELECT2 = new DocPath[] {
+            DocPath.create("select2.png"),
+            DocPath.create("select2-spinner.gif"),
+            DocPath.create("select2x2.png")
+    };
+
 }

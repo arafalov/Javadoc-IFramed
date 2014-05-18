@@ -80,7 +80,7 @@ public class HtmlDoclet extends AbstractDoclet {
             doclet = new HtmlDoclet();
         }
         boolean success = doclet.start(doclet, root);
-        
+
         if (success /* and some sort of common flag is set */) {
             success = doclet.compressHtmlFiles();
         }
@@ -211,6 +211,11 @@ public class HtmlDoclet extends AbstractDoclet {
 
         f = DocFile.createFileForOutput(configuration, DocPaths.JAVASCRIPT_SELECT2);
         f.copyResource(DocPaths.RESOURCES.resolve(DocPaths.JAVASCRIPT_SELECT2), true, true);
+
+        for (DocPath docPath : DocPaths.IMAGES_SELECT2) {
+            f = DocFile.createFileForOutput(configuration, docPath);
+            f.copyResource(DocPaths.RESOURCES.resolve(docPath), true, true);
+        }
 
     }
 
