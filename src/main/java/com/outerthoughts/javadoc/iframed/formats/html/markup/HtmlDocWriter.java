@@ -25,15 +25,15 @@
 
 package com.outerthoughts.javadoc.iframed.formats.html.markup;
 
-import java.io.*;
-import java.util.*;
-
-import com.sun.javadoc.*;
 import com.outerthoughts.javadoc.iframed.formats.html.SectionName;
-import com.outerthoughts.javadoc.iframed.internal.toolkit.*;
-import com.outerthoughts.javadoc.iframed.internal.toolkit.util.DocFile;
-import com.outerthoughts.javadoc.iframed.internal.toolkit.util.DocLink;
-import com.outerthoughts.javadoc.iframed.internal.toolkit.util.DocPath;
+import com.outerthoughts.javadoc.iframed.internal.toolkit.Configuration;
+import com.outerthoughts.javadoc.iframed.internal.toolkit.Content;
+import com.outerthoughts.javadoc.iframed.internal.toolkit.util.*;
+import com.sun.javadoc.ClassDoc;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.*;
 
 
 /**
@@ -267,6 +267,19 @@ public abstract class HtmlDocWriter extends HtmlWriter {
     }
 
     public Content getHyperLink(DocLink link,
+            Content label, String title, String target) {
+        HtmlTree anchor = HtmlTree.A(link.toString(), label);
+        if (title != null && title.length() != 0) {
+            anchor.addAttr(HtmlAttr.TITLE, title);
+        }
+        if (target != null && target.length() != 0) {
+            anchor.addAttr(HtmlAttr.TARGET, target);
+        }
+        return anchor;
+    }
+
+    // Like getHyperLink with DocLink, but instead with real URL
+    public Content getHyperLink(URL link,
             Content label, String title, String target) {
         HtmlTree anchor = HtmlTree.A(link.toString(), label);
         if (title != null && title.length() != 0) {

@@ -25,18 +25,22 @@
 
 package com.outerthoughts.javadoc.iframed.internal.toolkit;
 
+import com.outerthoughts.javadoc.iframed.internal.toolkit.builders.BuilderFactory;
+import com.outerthoughts.javadoc.iframed.internal.toolkit.taglets.TagletManager;
+import com.outerthoughts.javadoc.iframed.internal.toolkit.util.*;
+import com.sun.javadoc.*;
+import com.sun.tools.javac.jvm.Profile;
+import com.sun.tools.javac.sym.Profiles;
+
+import javax.tools.JavaFileManager;
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.sun.javadoc.*;
-import com.sun.tools.javac.sym.Profiles;
-import com.sun.tools.javac.jvm.Profile;
-import com.outerthoughts.javadoc.iframed.internal.toolkit.builders.BuilderFactory;
-import com.outerthoughts.javadoc.iframed.internal.toolkit.taglets.*;
-import com.outerthoughts.javadoc.iframed.internal.toolkit.util.*;
-import javax.tools.JavaFileManager;
 
 /**
  * Configure the output based on the options. Doclets should sub-class
@@ -112,6 +116,15 @@ public abstract class Configuration {
      * True if we should generate browsable sources.
      */
     public boolean linksource = false;
+
+    /**
+     * True if we should link to a public repository of source. Do not set -linksource if using this one.
+     * Options take source base directory and target base URL of the repository.
+     * Assumes the common project root for all sourcepaths (may not be true for multi-project javadoc)
+     */
+    public boolean linkrepo;
+    public Path linkRepoSource;
+    public URL linkRepoTarget;
 
     /**
      * True if command line option "-nosince" is used. Default value is
@@ -366,6 +379,7 @@ public abstract class Configuration {
                    option.equals("-xprofilespath")) {
             return 2;
         } else if (option.equals("-group") ||
+                   option.equals("-linkrepo") ||
                    option.equals("-linkoffline")) {
             return 3;
         } else {
@@ -529,6 +543,14 @@ public abstract class Configuration {
                 String url = os[1];
                 String pkglisturl = os[2];
                 extern.link(url, pkglisturl, root, true);
+            } else if (opt.equals("-linkrepo")) {
+                linkrepo = true;
+                linkRepoSource = Paths.get(os[1]);
+                try {
+                    linkRepoTarget = new URL(os[2]);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace(); //we validate it elsewhere
+                }
             }
         }
         if (sourcepath.length() == 0) {

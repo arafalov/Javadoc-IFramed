@@ -33,6 +33,9 @@ import com.outerthoughts.javadoc.iframed.internal.toolkit.util.*;
 import com.sun.javadoc.*;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -1059,15 +1062,38 @@ public class HtmlDocletWriter extends HtmlDocWriter {
         if (doc == null) {
             return;
         }
-        ClassDoc cd = doc.containingClass();
-        if (cd == null) {
-            //d must be a class doc since in has no containing class.
-            cd = (ClassDoc) doc;
+        Content linkContent;
+
+        //Check if linking to local source or to an external repo
+        if (!configuration.linkrepo) {
+            ClassDoc cd = doc.containingClass();
+            if (cd == null) {
+                //d must be a class doc since in has no containing class.
+                cd = (ClassDoc) doc;
+            }
+            DocPath href = pathToRoot
+                    .resolve(DocPaths.SOURCE_OUTPUT)
+                    .resolve(DocPath.forClass(cd));
+            linkContent = getHyperLink(href.fragment(SourceToHTMLConverter.getAnchorName(doc)), label, "", "");
+        } else {
+            //external repo
+            SourcePosition position = doc.position();
+            if (position == null) {
+                return; //can't do
+            }
+
+            Path relativePath = configuration.linkRepoSource.relativize(position.file().toPath());
+            try {
+                URL targetUrl = new URL(
+                        configuration.linkRepoTarget,
+                        String.format("%s#L%d", relativePath, position.line()));
+                linkContent = getHyperLink(targetUrl, label, "", "");
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                return; //can't do one - what will output look like?
+            }
+
         }
-        DocPath href = pathToRoot
-                .resolve(DocPaths.SOURCE_OUTPUT)
-                .resolve(DocPath.forClass(cd));
-        Content linkContent = getHyperLink(href.fragment(SourceToHTMLConverter.getAnchorName(doc)), label, "", "");
         htmltree.addContent(linkContent);
     }
 

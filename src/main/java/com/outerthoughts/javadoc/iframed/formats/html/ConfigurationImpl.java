@@ -25,19 +25,19 @@
 
 package com.outerthoughts.javadoc.iframed.formats.html;
 
-import java.net.*;
-import java.util.*;
-
-import javax.tools.JavaFileManager;
-
-import com.sun.javadoc.*;
 import com.outerthoughts.javadoc.iframed.formats.html.markup.ContentBuilder;
 import com.outerthoughts.javadoc.iframed.internal.toolkit.*;
 import com.outerthoughts.javadoc.iframed.internal.toolkit.util.*;
+import com.sun.javadoc.*;
 import com.sun.tools.doclint.DocLint;
 import com.sun.tools.javac.file.JavacFileManager;
 import com.sun.tools.javac.util.Context;
 import com.sun.tools.javadoc.RootDocImpl;
+
+import javax.tools.JavaFileManager;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.*;
 
 /**
  * Configure the output based on the command line options.
@@ -382,6 +382,8 @@ public class ConfigurationImpl extends Configuration {
         boolean nooverview = false;
         boolean splitindex = false;
         boolean noindex = false;
+        boolean linksource = false;
+        boolean linkrepo = false;
         // check shared options
         if (!generalValidOptions(options, reporter)) {
             return false;
@@ -464,7 +466,23 @@ public class ConfigurationImpl extends Configuration {
                     reporter.printError(getText("doclet.Option_doclint_invalid_arg"));
                     return false;
                 }
+            } else if (opt.equals("-linksource")) {
+                linksource = true;
+            } else if (opt.equals("-linkrepo")) {
+                linkrepo = true;
+                //target (2nd) is URL
+                try {
+                    new URL(os[2]);
+                } catch (MalformedURLException e) {
+                    reporter.printError(getText("doclet.MalformedURL", os[2]));
+                    return false;
+                }
             }
+
+        }
+        if (linkrepo && !linksource) {
+            reporter.printError("Missing Option -linkrepo is not valid without -linksource");
+            return false;
         }
         return true;
     }

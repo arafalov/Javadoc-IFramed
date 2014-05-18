@@ -146,7 +146,9 @@ public class HtmlDoclet extends AbstractDoclet {
     protected void generateOtherFiles(RootDoc root, ClassTree classtree)
             throws Exception {
         super.generateOtherFiles(root, classtree);
-        if (configuration.linksource) {
+
+        //If we want source links and only local (not public repo ones)
+        if (configuration.linksource && !configuration.linkrepo) {
             SourceToHTMLConverter.convertRoot(configuration,
                 root, DocPaths.SOURCE_OUTPUT);
         }
