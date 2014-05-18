@@ -33,7 +33,7 @@ function updateTabs(type)
 
 $(document).ready(function() {
 	$("#searchField").select2({
-		minimumInputLength: 3,
+		minimumInputLength: 1,
 		placeholder: "Search for a class or method",
 		ajax: {
 			url: "/lookup",
