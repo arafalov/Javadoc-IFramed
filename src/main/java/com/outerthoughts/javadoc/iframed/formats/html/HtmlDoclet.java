@@ -81,10 +81,21 @@ public class HtmlDoclet extends AbstractDoclet {
         }
         boolean success = doclet.start(doclet, root);
 
-        if (success /* and some sort of common flag is set */) {
-            success = doclet.compressHtmlFiles();
+        if (success) {
+            success = doclet.postprocess();
         }
         return success;
+    }
+
+
+    @Override
+    public boolean postprocess() {
+        if (!configuration.compress) {
+            return true;
+        }
+
+        System.out.println("Creating compressed HTML files");
+        return compressHtmlFiles();
     }
 
     private boolean compressHtmlFiles() {
@@ -104,9 +115,12 @@ public class HtmlDoclet extends AbstractDoclet {
         return true;
     }
 
+    /**
+     * Compress a file into a file next to it, with additional .hgz extension
+     * @param sourcePath
+     */
     private void compressFile(Path sourcePath) {
-        System.out.println("Compressing: " + sourcePath);
-        Path targetPath = sourcePath.resolveSibling(sourcePath.getFileName() + ".gz");
+        Path targetPath = sourcePath.resolveSibling(sourcePath.getFileName() + ".hgz");
         try(
                 OutputStream os = Files.newOutputStream(targetPath);
                 GZIPOutputStream gzOs = new GZIPOutputStream(os, 10000)

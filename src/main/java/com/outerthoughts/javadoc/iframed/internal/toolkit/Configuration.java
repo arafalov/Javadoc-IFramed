@@ -59,6 +59,7 @@ import java.util.regex.Pattern;
  */
 public abstract class Configuration {
 
+
     /**
      * Exception used to report a problem during setOptions.
      */
@@ -219,6 +220,12 @@ public abstract class Configuration {
      */
     public boolean showversion = false;
 
+
+    /**
+     * Generate compressed .hgz version of the html pages which helps if using a web server (properly configured)
+     */
+    public boolean compress;
+
     /**
      * Sourcepath from where to read the source files. Default is classpath.
      *
@@ -362,6 +369,7 @@ public abstract class Configuration {
             option.equals("-notimestamp") ||
             option.equals("-quiet") ||
             option.equals("-xnodate") ||
+            option.equals("-compress") ||
             option.equals("-version")) {
             return 1;
         } else if (option.equals("-d") ||
@@ -551,6 +559,8 @@ public abstract class Configuration {
                 } catch (MalformedURLException e) {
                     e.printStackTrace(); //we validate it elsewhere
                 }
+            } else if (opt.equals("-compress")) {
+                compress = true;
             }
         }
         if (sourcepath.length() == 0) {

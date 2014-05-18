@@ -207,4 +207,9 @@ public abstract class AbstractDoclet {
                 packageNames[packageNameIndex]), classtree);
         }
     }
+
+    /**
+     * Run this when all the generation is completed to finish up any cleanup.
+     */
+    public abstract boolean postprocess();
 }
