@@ -48,7 +48,6 @@ $(document).ready(function() {
 
 		},
 		formatResult: function(match){
-			//console.log("Match", match);
 			if (match.comment) {
 				return "<dl><dt>"+match.htmlDescription + "</dt><dd><em>" + match.comment +"</em></dd></dl>";
 			} else {
@@ -65,7 +64,6 @@ $(document).ready(function() {
 	//Events
 	$("#searchField")
 		.on("change", function(e) {
-			console.log("change "+JSON.stringify({val:e.val, added:e.added, removed:e.removed}));
             window.location = e.added.urlTarget;
 		})
 });
