@@ -37,7 +37,7 @@ $(document).ready(function() {
 		placeholder: "Search for a class or method",
 		ajax: {
 			url: "/lookup",
-			quietMillis: 300,
+			quietMillis: 200,
 			dataType: "json",
 			data: function(term, page){
 				return { query: term };
