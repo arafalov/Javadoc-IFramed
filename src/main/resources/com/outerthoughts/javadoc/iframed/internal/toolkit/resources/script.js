@@ -37,7 +37,7 @@ $(document).ready(function() {
 
 	$("#searchField").select2({
 		minimumInputLength: 1,
-		placeholder: "Search for a class, method or field",
+		placeholder: "Search for a package, class, method or field",
 		ajax: {
 			url: "/lookup",
 			quietMillis: 200,
