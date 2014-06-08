@@ -32,6 +32,9 @@ function updateTabs(type)
 
 
 $(document).ready(function() {
+    var typedTerm = "-NONE-";
+    var matchCount = -1;
+
 	$("#searchField").select2({
 		minimumInputLength: 1,
 		placeholder: "Search for a class, method or field",
@@ -40,9 +43,14 @@ $(document).ready(function() {
 			quietMillis: 200,
 			dataType: "json",
 			data: function(term, page){
+                typedTerm = term;
 				return { query: term };
 			},
 			results: function(data, page){
+                matchCount = data.length
+                if (matchCount == 0) {
+                    ga('send', 'event', 'jd-search', 'nomatch', typedTerm);
+                }
 				return {results: data};
 			},
 
@@ -64,6 +72,7 @@ $(document).ready(function() {
 	//Events
 	$("#searchField")
 		.on("change", function(e) {
+            ga('send', 'event', 'jd-search', e.added.urlTarget, typedTerm, matchCount);
             window.location = e.added.urlTarget;
 		})
 });
