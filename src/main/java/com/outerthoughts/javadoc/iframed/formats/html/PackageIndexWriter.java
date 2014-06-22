@@ -111,6 +111,7 @@ public class PackageIndexWriter extends AbstractPackageIndexWriter {
      * @param body the documentation tree to which the index will be added
      */
     protected void addIndex(Content body) {
+
         //Generate index TOC as we go along with the groups
 
         Content indexContent = new HtmlTree(HtmlTag.DIV);
@@ -134,9 +135,13 @@ public class PackageIndexWriter extends AbstractPackageIndexWriter {
         }
 
         if (showTOC) {
+
+            //Add H1 at the top of the index, so we are clear what this Javadoc is actually about (same as title)
             Content indexTOCDiv = HtmlTree.DIV(
                     HtmlStyle.contentContainer,
-                    HtmlTree.HEADING(HtmlTag.H2, new RawHtml("Package Groups")));
+                    HtmlTree.HEADING(HtmlTag.H1, new StringContent(configuration.windowtitle)));
+            indexTOCDiv.addContent(HtmlTree.HEADING(HtmlTag.H2, new RawHtml("Package Groups")));
+
             indexTOCDiv.addContent(indexTOCContent);
             body.addContent(indexTOCDiv);
         }
