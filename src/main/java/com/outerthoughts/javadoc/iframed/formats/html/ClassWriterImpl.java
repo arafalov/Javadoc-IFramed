@@ -171,8 +171,12 @@ public class ClassWriterImpl extends SubWriterHolderWriter
         //<input id="searchField" type="hidden" style="width:80%; margin-top: 1em; padding:2px;"/>
         HtmlTree searchInput = new HtmlTree(HtmlTag.INPUT);
         searchInput.addAttr(HtmlAttr.ID, "searchField");
-        searchInput.addAttr(HtmlAttr.STYLE, "width:80%; margin-top: 1em; padding:2px;"); //can't use CSS, Select2 copies this
-        bodyTree.addContent(searchInput);
+        searchInput.addAttr(HtmlAttr.STYLE, "width:80%; padding:2px;"); //can't use CSS, Select2 copies this
+
+        HtmlTree searchBox = HtmlTree.DIV(HtmlStyle.searchBox, searchInput);
+
+        bodyTree.addContent(searchBox);
+
 
         bodyTree.addContent(HtmlConstants.START_OF_CLASS_DATA);
         HtmlTree div = new HtmlTree(HtmlTag.DIV);

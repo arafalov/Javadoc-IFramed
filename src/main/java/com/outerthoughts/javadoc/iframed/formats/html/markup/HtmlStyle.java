@@ -36,6 +36,7 @@ package com.outerthoughts.javadoc.iframed.formats.html.markup;
  * @author Bhavesh Patel
  */
 public enum HtmlStyle {
+    searchBox,
     aboutLanguage,
     activeTableTab,
     altColor,

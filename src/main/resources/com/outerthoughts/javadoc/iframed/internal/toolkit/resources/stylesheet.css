@@ -578,3 +578,5 @@ div.framesetNav { position: fixed; height: 100%; width: 19%;}
 div.framesetNav iframe {width: 100%;}
 iframe.frameOverview {height: 30%;}
 iframe.framePackage {height: 70%}
+
+.searchBox {clear:both; border: 1px dashed blue; margin: 0.5em 0em; padding: 0.5em; background-color: lightblue}
