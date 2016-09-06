@@ -533,6 +533,15 @@ public class HtmlDocletWriter extends HtmlDocWriter {
             navList.addStyle(HtmlStyle.navList);
             navList.addAttr(HtmlAttr.TITLE,
                             configuration.getText("doclet.Navigation"));
+
+            //A total hack!
+            if (header) {
+                navList.addContent(
+                        HtmlTree.LI(
+                                HtmlTree.A("/",
+                                        new StringContent("⇖ solr-start.com"))));
+            }
+
             if (configuration.createoverview) {
                 navList.addContent(getNavLinkContents());
             }
